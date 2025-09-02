@@ -29,3 +29,9 @@ class Solution:
 
         # Step 4: Return the total count of jewels found
         return count
+
+        # --- One-liner equivalent (for conciseness) ---
+        # This solution leverages a set comprehension and sum to count jewels.
+        # It first creates a set of jewels for O(1) average time lookups,
+        # then sums 1 for each stone that is found in the jewel set.
+        # return sum(s in set(jewels) for s in stones)
