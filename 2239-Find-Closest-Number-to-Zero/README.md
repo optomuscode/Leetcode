@@ -28,28 +28,60 @@ Both 1 and -1 are the closest numbers to 0, so the largest value 1 is returned.
 
 ---
 
-## Solution Explanation
+## Intuition
 
-The solution uses Python's built-in `min()` function with a custom sorting key provided by a `lambda` function.
+The problem asks us to find a number in an array that is closest to zero. This means we need to compare the absolute distances of each number from zero. A key detail is the tie-breaking rule: if two numbers are equally close to zero (e.g., -5 and 5), we should return the larger of the two. This implies that simply finding the minimum absolute value isn't enough; we need a secondary comparison for ties.
 
-`return min(nums, key=lambda x: (abs(x), -x))`
+## Approach
 
-### Logic
+We can solve this problem by iterating through the array and keeping track of the number that is currently closest to zero.
 
-When you provide a `key` to the `min()` function, it doesn't compare the items in the list directly. Instead, it calls the key function on each item and compares the return values.
+1.  **Initialization**: Start by assuming the first number in the array (`nums[0]`) is the `closest_num` found so far, and its absolute value (`abs(nums[0])`) is the `min_dist`.
 
-In this case, the key `lambda x: (abs(x), -x)` returns a tuple `(distance_from_zero, negative_value)` for each number `x` in the list.
+2.  **Iteration**: Loop through the rest of the numbers in the array (starting from the second element). For each `current_num`:
+    *   Calculate its `current_dist` from zero (`abs(current_num)`).
+    *   **Comparison**:
+        *   If `current_dist` is less than `min_dist`: This `current_num` is strictly closer to zero. Update `min_dist` to `current_dist` and `closest_num` to `current_num`.
+        *   If `current_dist` is equal to `min_dist`: We have a tie. According to the problem, we should choose the larger number. So, if `current_num` is greater than `closest_num`, update `closest_num` to `current_num`.
+        *   If `current_dist` is greater than `min_dist`: This `current_num` is further away, so we do nothing.
 
-Python compares tuples element by element. 
+3.  **Return**: After iterating through all numbers, `closest_num` will hold the number closest to zero, correctly handling ties.
 
-1.  It first compares the first element of the tuples: `abs(x)`. This finds the number(s) with the smallest distance from zero.
-2.  If there is a tie (e.g., for `1` and `-1`, the `abs(x)` is `1` for both), Python moves to the second element of the tuple to break the tie: `-x`.
-3.  The `min()` function will choose the smaller of these second elements. To get the *largest* number in a tie (as the problem requires), we compare their negatives. For `1` and `-1`, the second tuple elements are `-1` and `1` respectively. `min(-1, 1)` is `-1`, which corresponds to the original number `1`. This is how the tie is broken in favor of the larger value.
+### Visual Logic
 
-### Complexity
+This flowchart illustrates the explicit approach.
 
-*   **Time Complexity: O(n)**
-    The `min()` function must iterate through all `n` elements of the input list `nums` once to find the minimum value based on the provided key. Therefore, the time complexity is linear.
+```mermaid
+flowchart TD
+    A[Start] --> B{Initialize closest_num = nums[0], min_dist = abs(nums[0])};
+    B --> C{For each num in nums (from second element)};
+    C -- Yes --> D{Calculate current_dist = abs(num)};
+    D --> E{Is current_dist < min_dist?};
+    E -- Yes --> F[min_dist = current_dist, closest_num = num];
+    F --> C;
+    E -- No --> G{Is current_dist == min_dist?};
+    G -- Yes --> H{Is num > closest_num?};
+    H -- Yes --> I[closest_num = num];
+    I --> C;
+    H -- No --> C;
+    G -- No --> C;
+    C -- No --> J[Return closest_num];
+    J --> K[End];
+```
+
+## Complexity
+
+Let `N` be the number of elements in the `nums` array.
+
+*   **Time Complexity: O(N)**
+    *   The algorithm iterates through the `nums` array exactly once. Each operation inside the loop (absolute value calculation, comparisons, assignments) takes constant time. Therefore, the total time complexity is directly proportional to the number of elements in the input array.
 
 *   **Space Complexity: O(1)**
-    The solution uses a constant amount of extra space. It does not create any new data structures that scale with the size of the input list. The `min` operation only needs to keep track of the minimum element found so far.
+    *   The algorithm uses a fixed amount of extra space for variables like `closest_num`, `min_dist`, `num`, and `dist`. This space does not grow with the size of the input array.
+
+## Key Learnings
+
+*   **Iterative Tracking**: This problem demonstrates a common pattern of iterating through a collection and maintaining a "best so far" value based on specific criteria.
+*   **Tie-Breaking Logic**: It highlights the importance of carefully handling edge cases and tie-breaking rules, which often require secondary conditions in comparison logic.
+*   **Absolute Value**: Reinforces the use of absolute values when distance from zero (or any point) is the primary concern.
+*   **Clarity vs. Conciseness**: While a one-liner solution exists (using `min` with a custom key), the explicit iterative approach can sometimes be more readable and easier to debug for those unfamiliar with advanced Python features or complex `key` functions. Both have their place depending on context.
