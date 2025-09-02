@@ -10,9 +10,22 @@ class Solution:
         Returns:
             The count of stones that are also jewels.
         """
-        jewel_set = set(jewels)
+        
+        # Intuition: To efficiently check if a stone is a jewel, 
+        # we need a fast way to look up jewel types. A set provides O(1) average time complexity for lookups.
+
+        # Step 1: Create a set of jewels for efficient lookup
+        jewel_types = set()
+        for char in jewels:
+            jewel_types.add(char)
+
+        # Step 2: Initialize a counter for jewels found
         count = 0
+
+        # Step 3: Iterate through each stone and check if it's a jewel
         for stone in stones:
-            if stone in jewel_set:
+            if stone in jewel_types:
                 count += 1
+
+        # Step 4: Return the total count of jewels found
         return count
