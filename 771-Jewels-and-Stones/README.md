@@ -41,7 +41,7 @@ This flowchart illustrates the process using the example `jewels = "aA"` and `st
 ```mermaid
 flowchart TD
     A[Start] --> B{Create jewel_set from 'aA'};
-    B --> C[jewel_set = {'a', 'A'}];
+    B --> C["jewel_set = &#123;'a', 'A'&#125;"];
     C --> D[Initialize count = 0];
     D --> E{Loop through each stone in 'aAAbbbb'};
     E --> F{stone = 'a'};
