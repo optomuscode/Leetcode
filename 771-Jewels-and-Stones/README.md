@@ -40,10 +40,10 @@ This flowchart illustrates the process using the example `jewels = "aA"` and `st
 
 ```mermaid
 flowchart TD
-    A[Start] --> B{Create jewel_set from "aA"};
+    A[Start] --> B{Create jewel_set from 'aA'};
     B --> C[jewel_set = {'a', 'A'}];
     C --> D[Initialize count = 0];
-    D --> E{Loop through each stone in "aAAbbbb"};
+    D --> E{Loop through each stone in 'aAAbbbb'};
     E --> F{stone = 'a'};
     F --> G{{Is 'a' in jewel_set?}};
     G -- Yes --> H[count = 1];
