@@ -53,15 +53,15 @@ This flowchart illustrates the explicit approach.
 
 ```mermaid
 flowchart TD
-    A[Start] --> B{Initialize closest_num = nums[0], min_dist = abs(nums[0])};
-    B --> C{For each num in nums (from second element)};
-    C -- Yes --> D{Calculate current_dist = abs(num)};
-    D --> E{Is current_dist < min_dist?};
-    E -- Yes --> F[min_dist = current_dist, closest_num = num];
+    A[Start] --> B{"Initialize closest_num = nums[0], min_dist = abs(nums[0])"};
+    B --> C{"For each num in nums (from second element)"};
+    C -- Yes --> D{"Calculate current_dist = abs(num)"};
+    D --> E{"Is current_dist < min_dist?"};
+    E -- Yes --> F["min_dist = current_dist, closest_num = num"];
     F --> C;
-    E -- No --> G{Is current_dist == min_dist?};
-    G -- Yes --> H{Is num > closest_num?};
-    H -- Yes --> I[closest_num = num];
+    E -- No --> G{"Is current_dist == min_dist?"};
+    G -- Yes --> H{"Is num > closest_num?"};
+    H -- Yes --> I["closest_num = num"];
     I --> C;
     H -- No --> C;
     G -- No --> C;
